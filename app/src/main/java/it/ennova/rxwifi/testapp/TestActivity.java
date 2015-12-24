@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import it.ennova.rxwifi.RxWifi;
+import it.ennova.rxwifi.internals.ScanResultUtils;
 import rx.functions.Action1;
 
 public class TestActivity extends AppCompatActivity{
@@ -18,7 +19,7 @@ public class TestActivity extends AppCompatActivity{
         RxWifi.from(this).subscribe(new Action1<ScanResult>() {
             @Override
             public void call(ScanResult result) {
-                Log.d("RX-WIFI-Reactive", result.SSID + " { " + result.capabilities + " } " + result.frequency);
+                Log.d("RX-WIFI-Reactive", ScanResultUtils.toWiFiNetwork(result).toString());
             }
         }, new Action1<Throwable>() {
             @Override
