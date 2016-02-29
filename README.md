@@ -15,47 +15,54 @@ Importing
 Gradle
 ---------
 Add the `JitPack` repo to the root `build.gradle` file of your project:
- 
+```groovy
     allprojects {
         repositories {
             ...
             maven { url "https://jitpack.io" }
         }
     }
+```
 Add the RxWifi library between the dependencies of your app
-
+```groovy
     compile 'com.github.Ennova-IT:RxWifi:1.0'
+```
+
 Maven
 --------
 Add the `JitPack` repo to your build file
-
+```xml
     <repositories>
         <repository>
 	        <id>jitpack.io</id>
 	        <url>https://jitpack.io</url>
 	    </repository>
     </repositories>
-
+```
 Add the dependency
-
+```xml
     <dependency>
         <groupId>com.github.Ennova-IT</groupId>
     	<artifactId>RxWifi</artifactId>
     	<version>1.0</version>
     </dependency>
-    
+```
+
 Usage
 =======
 The main entry point of the library will provide you with an `Hot Observable` by simply invoking the
 `static factory method` and passing the `Context` as input parameter.
 
-    RxWifi.from(context)
-   
+```java
+RxWifi.from(context)
+```
+
 As a bonus, we added a converter from the `ScanResult` class to a [`WiFiNetwork`][wifinetwork] one so
 that it is easier to show simpler information to the user
 
-    ScanResultUtils.toWiFiNetwork(scanResult)
-    
+```java
+ScanResultUtils.toWiFiNetwork(scanResult)
+```    
 Open points
 =======
 * force a new WiFi scanning
