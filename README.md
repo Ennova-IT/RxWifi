@@ -2,8 +2,12 @@ RxWifi
 ==========
 
 This library has been built in order to help us in retrieving the different networks in range of
-the device providing the result as an `Observable` instead of relying on usual Android's `Receiver` 
+the device providing the result as an `Observable` instead of relying on usual Android's `Receiver`
 paradigm.
+
+**RxWifi is now available on Android-Arsenal**
+
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-RxWifi-green.svg?style=true)](https://android-arsenal.com/details/1/3212)
 
 Disclaimer
 -----------
@@ -16,12 +20,12 @@ Gradle
 ---------
 Add the `JitPack` repo to the root `build.gradle` file of your project:
 ```groovy
-    allprojects {
-        repositories {
-            ...
-            maven { url "https://jitpack.io" }
-        }
-    }
+allprojects {
+  repositories {
+    ...
+    maven { url "https://jitpack.io" }
+  }
+}
 ```
 Add the RxWifi library between the dependencies of your app
 ```groovy
@@ -32,20 +36,20 @@ Maven
 --------
 Add the `JitPack` repo to your build file
 ```xml
-    <repositories>
-        <repository>
-	        <id>jitpack.io</id>
-	        <url>https://jitpack.io</url>
-	    </repository>
-    </repositories>
+<repositories>
+  <repository>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io</url>
+  </repository>
+</repositories>
 ```
 Add the dependency
 ```xml
-    <dependency>
-        <groupId>com.github.Ennova-IT</groupId>
-    	<artifactId>RxWifi</artifactId>
-    	<version>1.0</version>
-    </dependency>
+<dependency>
+  <groupId>com.github.Ennova-IT</groupId>
+  <artifactId>RxWifi</artifactId>
+  <version>1.0</version>
+</dependency>
 ```
 
 Usage
