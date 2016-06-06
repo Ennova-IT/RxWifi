@@ -20,7 +20,7 @@ package it.ennova.rxwifi;
 
 import android.support.annotation.NonNull;
 
-import java.util.Locale;
+import it.ennova.rxwifi.internals.WifiFrequency;
 
 /**
  * This class represents the minimum amount of information needed for showing the different networks
@@ -33,15 +33,17 @@ public class WiFiNetwork {
     private final String capabilities;
     private final int channel;
     private final int strength;
+    private final WifiFrequency frequency;
 
     public WiFiNetwork(@NonNull String SSID, @NonNull String BSSID, @NonNull String capabilities,
-                       int channel, int strength) {
+                       int channel, int strength, WifiFrequency frequency) {
 
         this.SSID = SSID;
         this.BSSID = BSSID;
         this.capabilities = capabilities;
         this.channel = channel;
         this.strength = strength;
+        this.frequency = frequency;
     }
 
     @NonNull
@@ -69,22 +71,29 @@ public class WiFiNetwork {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof WiFiNetwork)) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-        WiFiNetwork other = (WiFiNetwork) o;
-        return other.BSSID.equals(BSSID) && other.SSID.equals(SSID)
-                && other.capabilities.equals(capabilities) && other.channel == channel;
+        WiFiNetwork that = (WiFiNetwork) o;
+
+        return BSSID.equals(that.BSSID);
+
     }
 
     @Override
     public int hashCode() {
-        return BSSID.hashCode() + SSID.hashCode() + capabilities.hashCode() + channel;
+        return BSSID.hashCode();
     }
 
     @Override
     public String toString() {
-        return String.format(Locale.getDefault(), "%s [%s - %s]\tCh:%d\tStr:%d", SSID, BSSID, capabilities, channel, strength);
+        return "WiFiNetwork{" +
+                "SSID='" + SSID + '\'' +
+                ", BSSID='" + BSSID + '\'' +
+                ", capabilities='" + capabilities + '\'' +
+                ", channel=" + channel +
+                ", strength=" + strength +
+                ", frequency=" + frequency +
+                '}';
     }
 }

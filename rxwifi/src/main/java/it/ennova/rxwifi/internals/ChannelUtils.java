@@ -10,11 +10,11 @@ class ChannelUtils {
 
     private ChannelUtils() {}
 
-    public static int fromFrequency (int frequency) throws FrequencyOutOfRangeException{
+    public static WifiChannel fromFrequency (int frequency) throws FrequencyOutOfRangeException{
         if (CHANNEL_24GHZ.isInRange(frequency)) {
-            return CHANNEL_24GHZ.getChannelFrom(frequency);
+            return new WifiChannel(WifiFrequency.LOW, CHANNEL_24GHZ.getChannelFrom(frequency));
         } else if (CHANNEL_5GHZ.isInRange(frequency)) {
-            return CHANNEL_5GHZ.getChannelFrom(frequency);
+            return new WifiChannel(WifiFrequency.HIGH, CHANNEL_5GHZ.getChannelFrom(frequency));
         } else {
             throw new FrequencyOutOfRangeException();
         }

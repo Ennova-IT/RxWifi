@@ -19,8 +19,12 @@
 package it.ennova.rxwifi;
 
 import android.content.Context;
+import android.content.IntentFilter;
 import android.net.wifi.ScanResult;
+import android.net.wifi.WifiManager;
 import android.support.annotation.NonNull;
+
+import java.util.List;
 
 import rx.Observable;
 
@@ -28,6 +32,9 @@ import rx.Observable;
 public class RxWifi {
 
     private final static ResultReceiver receiver = new ResultReceiver();
+    private final static MultipleScanReceiver multiReceiver = new MultipleScanReceiver();
+
+    protected final static IntentFilter filter = new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
 
     /**
      * This method is the one that will obtain an {@link Observable} with all the data related to
@@ -35,5 +42,13 @@ public class RxWifi {
      */
     public static Observable<ScanResult> from (@NonNull Context context) {
         return receiver.startScanningFrom(context).getObservable();
+    }
+
+    /**
+     * This method can be used in order to provide more than one scanning. It will run on the io
+     * scheduler, so that it doesn't block the UI
+     */
+    public static Observable<List<ScanResult>> from(@NonNull Context context, int times) {
+        return multiReceiver.scan(context, times);
     }
 }

@@ -29,7 +29,7 @@ allprojects {
 ```
 Add the RxWifi library between the dependencies of your app
 ```groovy
-    compile 'com.github.Ennova-IT:RxWifi:1.1'
+    compile 'com.github.Ennova-IT:RxWifi:1.2'
 ```
 
 Maven
@@ -48,7 +48,7 @@ Add the dependency
 <dependency>
   <groupId>com.github.Ennova-IT</groupId>
   <artifactId>RxWifi</artifactId>
-  <version>1.1</version>
+  <version>1.2</version>
 </dependency>
 ```
 
@@ -60,6 +60,15 @@ The main entry point of the library will provide you with an `Hot Observable` by
 ```java
 RxWifi.from(context)
 ```
+
+Alternatively, you can request multiple scans of the available networks, so that you can leverage the network data changes.
+This method will return a `List<ScanResult>` multiple `times` (once per iteration).
+```java
+RxWifi.from(context, times)
+```
+
+**Note**: this command can take up to 10 seconds per scan, so it is running (by default) on a proper `Scheduler` so that it does
+not block the UI.
 
 As a bonus, we added a converter from the `ScanResult` class to a [`WiFiNetwork`][wifinetwork] one so
 that it is easier to show simpler information to the user
