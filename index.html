@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
+<head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="description" content="RxWifi : A Reactive library for WiFi scanning on Android">
@@ -9,128 +9,160 @@
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
     <title>RxWifi</title>
-  </head>
+</head>
 
-  <body>
+<body>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/Ennova-IT/RxWifi">View on GitHub</a>
+<!-- HEADER -->
+<div id="header_wrap" class="outer">
+    <header class="inner">
+        <a id="forkme_banner" href="https://github.com/Ennova-IT/RxWifi">View on GitHub</a>
 
-          <h1 id="project_title">RxWifi</h1>
-          <h2 id="project_tagline">A Reactive library for WiFi scanning on Android</h2>
+        <h1 id="project_title">RxWifi</h1>
+        <h2 id="project_tagline">A Reactive library for WiFi scanning on Android</h2>
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/Ennova-IT/RxWifi/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/Ennova-IT/RxWifi/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
+        <section id="downloads">
+            <a class="zip_download_link" href="https://github.com/Ennova-IT/RxWifi/zipball/master">Download
+                this project as a .zip file</a>
+            <a class="tar_download_link" href="https://github.com/Ennova-IT/RxWifi/tarball/master">Download
+                this project as a tar.gz file</a>
+        </section>
+    </header>
+</div>
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
+<!-- MAIN CONTENT -->
+<div id="main_content_wrap" class="outer">
+    <section id="main_content" class="inner">
         <h1>
-<a id="rxwifi" class="anchor" href="#rxwifi" aria-hidden="true"><span class="octicon octicon-link"></span></a>RxWifi</h1>
+            <a id="rxwifi" class="anchor" href="#rxwifi" aria-hidden="true"><span
+                    class="octicon octicon-link"></span></a>RxWifi</h1>
 
-<p>This library has been built in order to help us in retrieving the different networks in range of
-the device providing the result as an <code>Observable</code> instead of relying on usual Android's <code>Receiver</code>
-paradigm.</p>
+        <p>This library has been built in order to help us in retrieving the different networks in
+            range of
+            the device providing the result as an <code>Observable</code> instead of relying on
+            usual Android's <code>Receiver</code>
+            paradigm.</p>
 
-<h2>
-<a id="disclaimer" class="anchor" href="#disclaimer" aria-hidden="true"><span class="octicon octicon-link"></span></a>Disclaimer</h2>
+        <h2>
+            <a id="disclaimer" class="anchor" href="#disclaimer" aria-hidden="true"><span
+                    class="octicon octicon-link"></span></a>Disclaimer</h2>
 
-<p><em>RxWifi</em> is being developed an it is provided as is (please check the <a href="https://github.com/Ennova-IT/RxWifi/blob/master/LICENSE.md">license</a> for further
-information)</p>
+        <p><em>RxWifi</em> is being developed an it is provided as is (please check the <a
+                href="https://github.com/Ennova-IT/RxWifi/blob/master/LICENSE.md">license</a> for
+            further
+            information)</p>
 
-<h1>
-<a id="importing" class="anchor" href="#importing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Importing</h1>
+        <h1>
+            <a id="importing" class="anchor" href="#importing" aria-hidden="true"><span
+                    class="octicon octicon-link"></span></a>Importing</h1>
 
-<h2>
-<a id="gradle" class="anchor" href="#gradle" aria-hidden="true"><span class="octicon octicon-link"></span></a>Gradle</h2>
+        <h2>
+            <a id="gradle" class="anchor" href="#gradle" aria-hidden="true"><span
+                    class="octicon octicon-link"></span></a>Gradle</h2>
 
-<p>Add the <code>JitPack</code> repo to the root <code>build.gradle</code> file of your project:</p>
+        <p>Add the <code>JitPack</code> repo to the root <code>build.gradle</code> file of your
+            project:</p>
 
 <pre><code>allprojects {
     repositories {
-        ...
-        maven { url "https://jitpack.io" }
+    ...
+    maven { url "https://jitpack.io" }
     }
-}
+    }
 </code></pre>
 
-<p>Add the RxWifi library between the dependencies of your app</p>
+        <p>Add the RxWifi library between the dependencies of your app</p>
 
-<pre><code>compile 'com.github.Ennova-IT:RxWifi:1.1'
+<pre><code>compile 'com.github.Ennova-IT:RxWifi:1.2'
 </code></pre>
 
-<h2>
-<a id="maven" class="anchor" href="#maven" aria-hidden="true"><span class="octicon octicon-link"></span></a>Maven</h2>
+        <h2>
+            <a id="maven" class="anchor" href="#maven" aria-hidden="true"><span
+                    class="octicon octicon-link"></span></a>Maven</h2>
 
-<p>Add the <code>JitPack</code> repo to your build file</p>
+        <p>Add the <code>JitPack</code> repo to your build file</p>
 
 <pre><code>&lt;repositories&gt;
     &lt;repository&gt;
-        &lt;id&gt;jitpack.io&lt;/id&gt;
-        &lt;url&gt;https://jitpack.io&lt;/url&gt;
+    &lt;id&gt;jitpack.io&lt;/id&gt;
+    &lt;url&gt;https://jitpack.io&lt;/url&gt;
     &lt;/repository&gt;
-&lt;/repositories&gt;
+    &lt;/repositories&gt;
 </code></pre>
 
-<p>Add the dependency</p>
+        <p>Add the dependency</p>
 
 <pre><code>&lt;dependency&gt;
     &lt;groupId&gt;com.github.Ennova-IT&lt;/groupId&gt;
     &lt;artifactId&gt;RxWifi&lt;/artifactId&gt;
-    &lt;version&gt;1.1&lt;/version&gt;
-&lt;/dependency&gt;
+    &lt;version&gt;1.2&lt;/version&gt;
+    &lt;/dependency&gt;
 </code></pre>
 
-<h1>
-<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h1>
+        <h1>
+            <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span
+                    class="octicon octicon-link"></span></a>Usage</h1>
 
-<p>The main entry point of the library will provide you with an <code>Hot Observable</code> by simply invoking the
-<code>static factory method</code> and passing the <code>Context</code> as input parameter.</p>
+        <p>The main entry point of the library will provide you with an <code>Hot Observable</code>
+            by simply invoking the
+            <code>static factory method</code> and passing the <code>Context</code> as input
+            parameter.</p>
 
 <pre><code>RxWifi.from(context)
 </code></pre>
 
-<p>As a bonus, we added a converter from the <code>ScanResult</code> class to a <a href="https://github.com/Ennova-IT/RxWifi/blob/master/rxwifi/src/main/java/it/ennova/rxwifi/WiFiNetwork.java"><code>WiFiNetwork</code></a> one so
-that it is easier to show simpler information to the user</p>
+        <p>Alternatively, you can request multiple scans of the available networks, so that you can
+            leverage the network data changes.<br/>
+            This method will return a <code>List&lt;ScanResult&gt;</code> multiple
+            <code>times</code> (once per iteration).</p>
+<pre><code>RxWifi.from(context, times)
+</code></pre>
+        <p><b>Note</b>: this command can take up to 10 seconds per scan, so it is running (by
+            default) on a proper <code>Scheduler</code> so that it does
+            not block the UI.</p>
+
+
+        <p>As a bonus, we added a converter from the <code>ScanResult</code> class to a <a
+                href="https://github.com/Ennova-IT/RxWifi/blob/master/rxwifi/src/main/java/it/ennova/rxwifi/WiFiNetwork.java"><code>WiFiNetwork</code></a>
+            one so
+            that it is easier to show simpler information to the user</p>
 
 <pre><code>ScanResultUtils.toWiFiNetwork(scanResult)
 </code></pre>
 
-<h1>
-<a id="open-points" class="anchor" href="#open-points" aria-hidden="true"><span class="octicon octicon-link"></span></a>Open points</h1>
+        <h1>
+            <a id="open-points" class="anchor" href="#open-points" aria-hidden="true"><span
+                    class="octicon octicon-link"></span></a>Open points</h1>
 
-<ul>
-<li>force a new WiFi scanning</li>
-<li>further optimizations</li>
-</ul>
-      </section>
-    </div>
+        <ul>
+            <li><strike>force a new WiFi scanning</strike> Available from version <b>1.2</b></li>
+            <li>further optimizations</li>
+        </ul>
+    </section>
+</div>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">RxWifi maintained by <a href="https://github.com/Ennova-IT">Ennova-IT</a></p>
+<!-- FOOTER  -->
+<div id="footer_wrap" class="outer">
+    <footer class="inner">
+        <p class="copyright">RxWifi maintained by <a
+                href="https://github.com/Ennova-IT">Ennova-IT</a></p>
         <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
+    </footer>
+</div>
 
-              <script type="text/javascript">
+<script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-          </script>
-          <script type="text/javascript">
+
+</script>
+<script type="text/javascript">
             try {
               var pageTracker = _gat._getTracker("UA-67468135-1");
             pageTracker._trackPageview();
             } catch(err) {}
-          </script>
+
+</script>
 
 
-  </body>
+</body>
 </html>
