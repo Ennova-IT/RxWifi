@@ -29,7 +29,7 @@ allprojects {
 ```
 Add the RxWifi library between the dependencies of your app
 ```groovy
-    compile 'com.github.Ennova-IT:RxWifi:1.0'
+    compile 'com.github.Ennova-IT:RxWifi:1.1'
 ```
 
 Maven
@@ -48,7 +48,7 @@ Add the dependency
 <dependency>
   <groupId>com.github.Ennova-IT</groupId>
   <artifactId>RxWifi</artifactId>
-  <version>1.0</version>
+  <version>1.1</version>
 </dependency>
 ```
 
