@@ -14,7 +14,8 @@ public class ScanResultUtils {
     private ScanResultUtils () {}
 
     public static WiFiNetwork toWiFiNetwork(@NonNull ScanResult scanResult) {
-        return new WiFiNetwork(scanResult.SSID, scanResult.BSSID, scanResult.capabilities,
-                ChannelUtils.fromFrequency(scanResult.frequency), PowerUtils.toPercentage(scanResult));
+        WifiChannel channel = ChannelUtils.fromFrequency(scanResult.frequency);
+        return new WiFiNetwork(scanResult.SSID, scanResult.BSSID, scanResult.capabilities, channel.channel
+                , PowerUtils.toPercentage(scanResult), channel.frequency);
     }
 }

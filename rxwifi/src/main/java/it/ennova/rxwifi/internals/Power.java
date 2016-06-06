@@ -1,6 +1,6 @@
 package it.ennova.rxwifi.internals;
 
-public class Power {
+class Power {
 
     private final int percentage;
     private final int level;
