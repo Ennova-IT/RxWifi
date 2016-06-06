@@ -20,6 +20,8 @@ package it.ennova.rxwifi;
 
 import android.support.annotation.NonNull;
 
+import java.util.Locale;
+
 /**
  * This class represents the minimum amount of information needed for showing the different networks
  * on a graph
@@ -83,6 +85,6 @@ public class WiFiNetwork {
 
     @Override
     public String toString() {
-        return String.format("%s [%s - %s]\tCh:%d\tStr:%d", SSID, BSSID, capabilities, channel, strength);
+        return String.format(Locale.getDefault(), "%s [%s - %s]\tCh:%d\tStr:%d", SSID, BSSID, capabilities, channel, strength);
     }
 }
