@@ -31,8 +31,8 @@ import rx.Observable;
 
 public class RxWifi {
 
-    private final static ResultReceiver receiver = new ResultReceiver();
-    private final static MultipleScanReceiver multiReceiver = new MultipleScanReceiver();
+//    private final static ResultReceiver receiver = new ResultReceiver();
+//    private final static MultipleScanReceiver multiReceiver = new MultipleScanReceiver();
 
     protected final static IntentFilter filter = new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
 
@@ -41,7 +41,7 @@ public class RxWifi {
      * the networks in range of the device
      */
     public static Observable<ScanResult> from (@NonNull Context context) {
-        return receiver.startScanningFrom(context).getObservable();
+        return new ResultReceiver().startScanningFrom(context).getObservable();
     }
 
     /**
@@ -49,6 +49,6 @@ public class RxWifi {
      * scheduler, so that it doesn't block the UI
      */
     public static Observable<List<ScanResult>> from(@NonNull Context context, int times) {
-        return multiReceiver.scan(context, times);
+        return new MultipleScanReceiver().scan(context, times);
     }
 }
