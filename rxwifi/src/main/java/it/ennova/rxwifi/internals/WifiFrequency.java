@@ -13,6 +13,14 @@ public enum WifiFrequency {
         this.description = description;
     }
 
+    public boolean is24GHz(){
+        return LOW.level == level;
+    }
+
+    public boolean is5GHz(){
+        return HIGH.level == level;
+    }
+
     @Override
     public String toString() {
         return description;
