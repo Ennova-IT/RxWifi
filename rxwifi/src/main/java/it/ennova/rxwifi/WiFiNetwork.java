@@ -71,6 +71,10 @@ public class WiFiNetwork implements Parcelable {
         return strength;
     }
 
+    public WifiFrequency getFrequency() {
+        return frequency;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
