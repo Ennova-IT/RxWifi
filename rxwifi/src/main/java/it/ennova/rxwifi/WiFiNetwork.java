@@ -18,6 +18,8 @@
 
 package it.ennova.rxwifi;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import it.ennova.rxwifi.internals.WifiFrequency;
@@ -26,7 +28,7 @@ import it.ennova.rxwifi.internals.WifiFrequency;
  * This class represents the minimum amount of information needed for showing the different networks
  * on a graph
  */
-public class WiFiNetwork {
+public class WiFiNetwork implements Parcelable {
 
     private final String SSID;
     private final String BSSID;
@@ -100,4 +102,41 @@ public class WiFiNetwork {
                 ", frequency=" + frequency +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.SSID);
+        dest.writeString(this.BSSID);
+        dest.writeString(this.capabilities);
+        dest.writeInt(this.channel);
+        dest.writeInt(this.strength);
+        dest.writeInt(this.frequency == null ? -1 : this.frequency.ordinal());
+    }
+
+    protected WiFiNetwork(Parcel in) {
+        this.SSID = in.readString();
+        this.BSSID = in.readString();
+        this.capabilities = in.readString();
+        this.channel = in.readInt();
+        this.strength = in.readInt();
+        int tmpFrequency = in.readInt();
+        this.frequency = tmpFrequency == -1 ? null : WifiFrequency.values()[tmpFrequency];
+    }
+
+    public static final Parcelable.Creator<WiFiNetwork> CREATOR = new Parcelable.Creator<WiFiNetwork>() {
+        @Override
+        public WiFiNetwork createFromParcel(Parcel source) {
+            return new WiFiNetwork(source);
+        }
+
+        @Override
+        public WiFiNetwork[] newArray(int size) {
+            return new WiFiNetwork[size];
+        }
+    };
 }
