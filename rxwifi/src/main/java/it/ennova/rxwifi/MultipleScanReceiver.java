@@ -8,7 +8,9 @@ import android.net.wifi.WifiManager;
 import android.support.annotation.NonNull;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
+import rx.Emitter;
 import rx.Observable;
 import rx.Observer;
 import rx.functions.Action0;
@@ -20,25 +22,18 @@ class MultipleScanReceiver {
 
     private BroadcastReceiver receiver;
 
-    public Observable<List<ScanResult>> scan(final Context context, final int times) {
-        final WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+    Observable<List<ScanResult>> scan(final Context context, final int times) {
+        final WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
-        return Observable.create(SyncOnSubscribe.createStateless(getSubscribeAction(context, wifiManager)))
-                .doOnUnsubscribe(getUnsubscribeAction(context))
-                .take(times)
-                .subscribeOn(Schedulers.io());
-    }
+        return Observable.fromEmitter(new Action1<Emitter<List<ScanResult>>>() {
 
-    @NonNull
-    private Action1<Observer<? super List<ScanResult>>> getSubscribeAction(final Context context, final WifiManager wifiManager) {
-        return new Action1<Observer<? super List<ScanResult>>>() {
             @Override
-            public void call(final Observer<? super List<ScanResult>> observer) {
+            public void call(final Emitter<List<ScanResult>> emitter) {
                 if (receiver == null) {
                     receiver = new BroadcastReceiver() {
                         @Override
                         public void onReceive(Context context, Intent intent) {
-                            observer.onNext(wifiManager.getScanResults());
+                            emitter.onNext(wifiManager.getScanResults());
                             wifiManager.startScan();
                         }
                     };
@@ -47,7 +42,10 @@ class MultipleScanReceiver {
 
                 wifiManager.startScan();
             }
-        };
+        }, Emitter.BackpressureMode.LATEST)
+                .doOnUnsubscribe(getUnsubscribeAction(context))
+                .take(times)
+                .subscribeOn(Schedulers.io());
     }
 
     @NonNull
