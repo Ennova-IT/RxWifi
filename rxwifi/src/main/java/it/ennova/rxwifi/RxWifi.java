@@ -38,7 +38,7 @@ public class RxWifi {
      * the networks in range of the device
      */
     public static Observable<ScanResult> from (@NonNull Context context) {
-        return new ResultReceiver(context).startScanningFrom().getObservable();
+        return new ResultReceiver().startScanningFrom(context).getObservable();
     }
 
     /**

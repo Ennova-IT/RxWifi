@@ -54,7 +54,7 @@ public class TestActivity extends AppCompatActivity{
             }
         });
 
-        RxWifi.from(getApplicationContext(), 5).map(new Func1<List<ScanResult>, Integer>() {
+        /*RxWifi.from(getApplicationContext(), 5).map(new Func1<List<ScanResult>, Integer>() {
             @Override
             public Integer call(List<ScanResult> results) {
                 return results.size();
@@ -74,7 +74,7 @@ public class TestActivity extends AppCompatActivity{
             public void call() {
                 Log.d("RX-WIFI-MultipleScans", "COMPLETED!");
             }
-        });
+        });*/
     }
 
 }

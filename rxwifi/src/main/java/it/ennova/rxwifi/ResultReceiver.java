@@ -6,10 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
+import android.support.annotation.NonNull;
 
 import rx.Observable;
-import rx.Subscription;
-import rx.functions.Action0;
 import rx.subjects.ReplaySubject;
 
 /**
@@ -23,45 +22,34 @@ class ResultReceiver extends BroadcastReceiver {
      * subscribing to it
      */
     private ReplaySubject<ScanResult> subject;
-    private final Context context;
-    private final WifiManager wifiManager;
-    private Subscription subscription;
 
-    @SuppressLint("WifiManagerPotentialLeak")
-    public ResultReceiver(final Context context) {
+    public ResultReceiver() {
         subject = ReplaySubject.create();
-        this.context = context.getApplicationContext();
-        wifiManager = (WifiManager) this.context.getSystemService(Context.WIFI_SERVICE);
     }
 
     /**
      * This method implements a fluid API to start the scanning for new networks.
      */
-    public ResultReceiver startScanningFrom() {
-        context.registerReceiver(this, RxWifi.filter);
-        wifiManager.startScan();
+    public ResultReceiver startScanningFrom(@NonNull Context context) {
+        Context appCtx = context.getApplicationContext();
+        appCtx.registerReceiver(this, RxWifi.filter);
+        getWifiManager(appCtx).startScan();
         return this;
+    }
+
+    @SuppressLint("WifiManagerPotentialLeak")
+    private static WifiManager getWifiManager(@NonNull Context context) {
+        return (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
         if (WifiManager.SCAN_RESULTS_AVAILABLE_ACTION.equals(intent.getAction())) {
+            Context appCtx = context.getApplicationContext();
 
-            subscription = Observable.from(wifiManager.getScanResults())
-                    .doAfterTerminate(new Action0() {
-                        @Override
-                        public void call() {
-                            unsubscribe();
-                        }
-                    })
+            appCtx.unregisterReceiver(this);
+            Observable.from(getWifiManager(appCtx).getScanResults())
                     .subscribe(subject);
-        }
-    }
-
-    private void unsubscribe() {
-        context.unregisterReceiver(this);
-        if (subscription != null && !subscription.isUnsubscribed()) {
-            subscription.unsubscribe();
         }
     }
 
