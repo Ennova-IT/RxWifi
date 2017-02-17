@@ -1,23 +1,14 @@
 package it.ennova.rxwifi;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.support.annotation.NonNull;
-import android.util.Log;
-
-import java.util.List;
 
 import rx.Observable;
-import rx.Observer;
-import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.observables.SyncOnSubscribe;
-import rx.schedulers.Schedulers;
 import rx.subjects.ReplaySubject;
 
 /**
@@ -31,20 +22,23 @@ class ResultReceiver extends BroadcastReceiver {
      * subscribing to it
      */
     private ReplaySubject<ScanResult> subject;
+    private final Context context;
 
-    public ResultReceiver() {
+    public ResultReceiver(final Context context) {
         subject = ReplaySubject.create();
+        this.context = context.getApplicationContext();
     }
 
     /**
      * This method implements a fluid API to start the scanning for new networks.
      */
-    public ResultReceiver startScanningFrom(@NonNull Context context) {
+    public ResultReceiver startScanningFrom() {
         context.registerReceiver(this, RxWifi.filter);
         getWifiManager(context).startScan();
         return this;
     }
 
+    @SuppressLint("WifiManagerPotentialLeak")
     private static WifiManager getWifiManager(@NonNull Context context) {
         return (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
     }
@@ -52,8 +46,8 @@ class ResultReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (WifiManager.SCAN_RESULTS_AVAILABLE_ACTION.equals(intent.getAction())) {
-            context.unregisterReceiver(this);
-            Observable.from((getWifiManager(context)).getScanResults())
+            this.context.unregisterReceiver(this);
+            Observable.from((getWifiManager(this.context)).getScanResults())
                     .subscribe(subject);
         }
     }
