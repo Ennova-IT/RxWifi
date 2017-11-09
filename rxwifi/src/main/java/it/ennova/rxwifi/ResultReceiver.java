@@ -8,8 +8,11 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.support.annotation.NonNull;
 
-import rx.Observable;
-import rx.subjects.ReplaySubject;
+import org.reactivestreams.Subscriber;
+
+import io.reactivex.Observable;
+import io.reactivex.subjects.ReplaySubject;
+
 
 /**
  * This object is an extension of a {@link BroadcastReceiver} that mixes the classic Android API
@@ -18,7 +21,7 @@ import rx.subjects.ReplaySubject;
 class ResultReceiver extends BroadcastReceiver {
 
     /**
-     * This variable is the one that will emit the networks whenever a {@link rx.Subscriber} is
+     * This variable is the one that will emit the networks whenever a {@link Subscriber} is
      * subscribing to it
      */
     private ReplaySubject<ScanResult> subject;
@@ -48,7 +51,7 @@ class ResultReceiver extends BroadcastReceiver {
             Context appCtx = context.getApplicationContext();
 
             appCtx.unregisterReceiver(this);
-            Observable.from(getWifiManager(appCtx).getScanResults())
+            Observable.fromIterable(getWifiManager(appCtx).getScanResults())
                     .subscribe(subject);
         }
     }
@@ -60,6 +63,6 @@ class ResultReceiver extends BroadcastReceiver {
      * @return an instance of {@code Observable<ScanResult>}
      */
     public Observable<ScanResult> getObservable() {
-        return subject.asObservable();
+        return subject;
     }
 }

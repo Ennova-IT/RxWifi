@@ -8,27 +8,26 @@ import android.net.wifi.WifiManager;
 import android.support.annotation.NonNull;
 
 import java.util.List;
-import java.util.concurrent.Callable;
 
-import rx.Emitter;
-import rx.Observable;
-import rx.Observer;
-import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.observables.SyncOnSubscribe;
-import rx.schedulers.Schedulers;
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.FlowableEmitter;
+import io.reactivex.FlowableOnSubscribe;
+import io.reactivex.functions.Action;
+import io.reactivex.schedulers.Schedulers;
 
 class MultipleScanReceiver {
 
     private BroadcastReceiver receiver;
 
-    Observable<List<ScanResult>> scan(final Context context, final int times) {
+    Flowable<List<ScanResult>> scan(final Context context, final int times) {
         final WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-
-        return Observable.fromEmitter(new Action1<Emitter<List<ScanResult>>>() {
-
+        if (wifiManager == null){
+            return Flowable.empty();
+        }
+        return Flowable.create(new FlowableOnSubscribe<List<ScanResult>>() {
             @Override
-            public void call(final Emitter<List<ScanResult>> emitter) {
+            public void subscribe(final FlowableEmitter<List<ScanResult>> emitter) throws Exception {
                 if (receiver == null) {
                     receiver = new BroadcastReceiver() {
                         @Override
@@ -42,17 +41,18 @@ class MultipleScanReceiver {
 
                 wifiManager.startScan();
             }
-        }, Emitter.BackpressureMode.LATEST)
-                .doOnUnsubscribe(getUnsubscribeAction(context))
-                .take(times)
-                .subscribeOn(Schedulers.io());
+        }, BackpressureStrategy.LATEST)
+            .doOnComplete(getUnsubscribeAction(context))
+            .take(times)
+            .subscribeOn(Schedulers.io());
+
     }
 
     @NonNull
-    private Action0 getUnsubscribeAction(final Context context) {
-        return new Action0() {
+    private Action getUnsubscribeAction(final Context context) {
+        return new Action() {
             @Override
-            public void call() {
+            public void run() throws Exception {
                 context.unregisterReceiver(receiver);
             }
         };

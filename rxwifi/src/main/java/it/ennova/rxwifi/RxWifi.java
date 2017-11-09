@@ -26,7 +26,8 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
-import rx.Observable;
+import io.reactivex.Flowable;
+import io.reactivex.Observable;
 
 
 public class RxWifi {
@@ -45,7 +46,7 @@ public class RxWifi {
      * This method can be used in order to provide more than one scanning. It will run on the io
      * scheduler, so that it doesn't block the UI
      */
-    public static Observable<List<ScanResult>> from(@NonNull Context context, int times) {
+    public static Flowable<List<ScanResult>> from(@NonNull Context context, int times) {
         return new MultipleScanReceiver().scan(context, times);
     }
 }
