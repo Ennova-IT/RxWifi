@@ -9,13 +9,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import java.util.List;
-
+import io.reactivex.functions.Consumer;
 import it.ennova.rxwifi.RxWifi;
 import it.ennova.rxwifi.internals.ScanResultUtils;
-import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.functions.Func1;
 
 public class TestActivity extends AppCompatActivity{
     private final int PERMISSION_CODE = 1;
@@ -42,14 +38,14 @@ public class TestActivity extends AppCompatActivity{
     }
 
     private void startScanning() {
-        RxWifi.from(getApplicationContext()).subscribe(new Action1<ScanResult>() {
+        RxWifi.from(getApplicationContext()).subscribe(new Consumer<ScanResult>() {
             @Override
-            public void call(ScanResult result) {
+            public void accept(ScanResult result) throws Exception {
                 Log.d("RX-WIFI-SingleScan", ScanResultUtils.toWiFiNetwork(result).toString());
             }
-        }, new Action1<Throwable>() {
+        }, new Consumer<Throwable>() {
             @Override
-            public void call(Throwable throwable) {
+            public void accept(Throwable throwable) throws Exception {
                 Log.e("RX-WIFI-SingleScan", throwable.getMessage());
             }
         });
